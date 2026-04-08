@@ -22,12 +22,11 @@ typedef struct _objects_t {
     lv_obj_t *power_btn;
     lv_obj_t *main_panel;
     lv_obj_t *temp_label;
-    lv_obj_t *ambience_label;
     lv_obj_t *top_panel;
     lv_obj_t *lower_panel;
-    lv_obj_t *middle_panel;
     lv_obj_t *ui_label_time;
     lv_obj_t *logo_img;
+    lv_obj_t *start_button_d;
 } objects_t;
 
 extern objects_t objects;
