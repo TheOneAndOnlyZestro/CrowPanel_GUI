@@ -1,21 +1,15 @@
-#ifndef EEZ_LVGL_UI_GUI_H
-#define EEZ_LVGL_UI_GUI_H
-
-#include <lvgl.h>
-
-#include "screens.h"
+#ifndef EEZ_LVGL_UI_H
+#define EEZ_LVGL_UI_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void ui_init();
-void ui_tick();
-
-void loadScreen(enum ScreensEnum screenId);
+// We only need to expose the initialization function
+void ui_init(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // EEZ_LVGL_UI_GUI_H
+#endif // EEZ_LVGL_UI_H
