@@ -28,14 +28,21 @@ void create_screen_main() {
     // ==========================================
     objects.main_scr = lv_obj_create(NULL);
 
-    // Global Mini Logo
+    // Global Mini Logo (Shifted 20px to the right to clear the left bezel)
     lv_obj_t * mini_logo = lv_img_create(objects.main_scr);
     lv_img_set_src(mini_logo, &img_logo);
     lv_img_set_zoom(mini_logo, 75); 
-    lv_obj_align(mini_logo, LV_ALIGN_TOP_LEFT, 5, 5);
+    lv_obj_align(mini_logo, LV_ALIGN_TOP_RIGHT, -25, 5); // <--- X changed to 25
 
-    // Tabview on the BOTTOM
+    // Tabview on the BOTTOM (Icons Only)
     objects.tabview = lv_tabview_create(objects.main_scr, LV_DIR_BOTTOM, 50);
+    
+    // --- THE 4mm LEFT BEZEL FIX ---
+    // Screen is 272px wide. Shrink wrapper to 252px and pin to the RIGHT.
+    // This leaves a 20px (4mm) dead-zone on the left edge!
+    lv_obj_set_width(objects.tabview, 252);
+    lv_obj_align(objects.tabview, LV_ALIGN_LEFT_MID, 0, 0);
+
     lv_obj_t * tab_home = lv_tabview_add_tab(objects.tabview, LV_SYMBOL_HOME);
     lv_obj_t * tab_adv  = lv_tabview_add_tab(objects.tabview, LV_SYMBOL_LIST);
     lv_obj_t * tab_set  = lv_tabview_add_tab(objects.tabview, LV_SYMBOL_SETTINGS);
@@ -78,7 +85,7 @@ void create_screen_main() {
     lv_obj_set_style_radius(objects.bg_circle_1, LV_RADIUS_CIRCLE, 0);
     lv_obj_set_style_bg_color(objects.bg_circle_1, COLOR_OFF, 0);
     lv_obj_set_style_border_width(objects.bg_circle_1, 0, 0);
-    lv_obj_clear_flag(objects.bg_circle_1, LV_OBJ_FLAG_CLICKABLE); // Let touch pass to the Arc
+    lv_obj_clear_flag(objects.bg_circle_1, LV_OBJ_FLAG_CLICKABLE); 
     lv_obj_clear_flag(objects.bg_circle_1, LV_OBJ_FLAG_SCROLLABLE);
 
     objects.label_soc_1 = lv_label_create(objects.bg_circle_1);
@@ -112,7 +119,7 @@ void create_screen_main() {
     lv_label_set_text(objects.label_internal_soc, "0% (PLACEHOLDER)");
 
     // ------------------------------------------
-    // TAB 2: ADVANCED (Discharging & Clean Rows)
+    // TAB 2: ADVANCED
     // ------------------------------------------
     objects.arc_soc_2 = lv_arc_create(tab_adv);
     lv_obj_set_size(objects.arc_soc_2, 160, 160);
@@ -146,7 +153,7 @@ void create_screen_main() {
     lv_obj_set_style_text_font(objects.label_status_2, &lv_font_montserrat_12, 0);
     lv_label_set_text(objects.label_status_2, "STOPPED"); 
 
-    // --- ENHANCED ROWS PANEL ---
+    // ENHANCED ROWS PANEL
     lv_obj_t * panel_adv = lv_obj_create(tab_adv);
     lv_obj_set_size(panel_adv, 240, 160);
     lv_obj_set_style_bg_opa(panel_adv, 0, 0);
@@ -218,9 +225,7 @@ void create_screen_main() {
     lv_obj_set_style_text_font(objects.label_internal_v, &lv_font_montserrat_20, 0);
     lv_obj_set_style_text_color(objects.label_internal_v, lv_color_hex(0xB388FF), 0); 
 
-    // ------------------------------------------
     // TAB 3: SETTINGS
-    // ------------------------------------------
     lv_obj_t * spacer = lv_obj_create(tab_set);
     lv_obj_set_size(spacer, 10, 20);
     lv_obj_set_style_bg_opa(spacer, 0, 0);
