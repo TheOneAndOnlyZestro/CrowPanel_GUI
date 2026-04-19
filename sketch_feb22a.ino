@@ -1,3 +1,5 @@
+#include "config.h"
+
 #include <lvgl.h>
 #include <SPI.h>
 #include <Arduino_GFX_Library.h>
@@ -8,16 +10,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-//#define ESP32S3
-#define ESP32
-
 // =========================================================
 // HARDWARE PINS & SETTINGS
 // =========================================================
 #define GFX_BL DF_GFX_BL 
 
 // FOR ESP32-S3 (480x272 Capacitive)
-#ifdef ESP32S3
+#ifdef TARGET_ESP32_S3
   #define SD_MOSI 11
   #define SD_MISO 13
   #define SD_SCK  12
@@ -28,7 +27,7 @@
 #endif
 
 // FOR ESP32-WROOM (ELECROW 2.8" 320x240 Resistive)
-#ifdef ESP32
+#ifdef TARGET_ESP32_WROOM
   #define TFT_MOSI 13
   #define TFT_MISO 12
   #define TFT_SCK  14
@@ -55,7 +54,7 @@ char display_state[10][32] = {0};
 // =========================================================
 SPIClass& spi = SPI;
 
-#ifdef ESP32S3
+#ifdef TARGET_ESP32_S3
 Arduino_ESP32RGBPanel *bus = new Arduino_ESP32RGBPanel(
   GFX_NOT_DEFINED, GFX_NOT_DEFINED, GFX_NOT_DEFINED,
   40, 41, 39, 42, 45, 48, 47, 21, 14,
@@ -66,7 +65,7 @@ Arduino_RPi_DPI_RGBPanel *lcd = new Arduino_RPi_DPI_RGBPanel(
   bus, 480, 0, 8, 4, 43, 272, 0, 8, 4, 12, 1, 7000000, true);
 #endif 
 
-#ifdef ESP32
+#ifdef TARGET_ESP32_WROOM
 Arduino_DataBus *bus = new Arduino_ESP32SPI(
     TFT_DC, TFT_CS, TFT_SCK, TFT_MOSI, TFT_MISO
 );
@@ -74,18 +73,17 @@ Arduino_DataBus *bus = new Arduino_ESP32SPI(
 Arduino_GFX *lcd = new Arduino_ILI9341(bus, GFX_NOT_DEFINED /* RST */, 1 /* rotation */);
 #endif
 
-// 🛑 COMMENTED OUT TO PREVENT CRASH
 #include "touch.h"
 
 static uint32_t screenWidth;
 static uint32_t screenHeight;
 static lv_disp_draw_buf_t draw_buf;
 
-#ifdef ESP32S3
+#ifdef TARGET_ESP32_S3
 static lv_color_t disp_draw_buf[480 * 272 / 8];
 #endif
 
-#ifdef ESP32
+#ifdef TARGET_ESP32_WROOM
 static lv_color_t disp_draw_buf[320 * 240 / 8];
 #endif
 
@@ -97,11 +95,6 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
   lcd->draw16bitRGBBitmap(area->x1, area->y1, (uint16_t *)&color_p->full, w, h);
   lv_disp_flush_ready(disp);
 }
-
-// void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
-//   // 🛑 DISABLED TEMPORARILY TO PREVENT CRASH
-//   data->state = LV_INDEV_STATE_REL;
-// } 
 
 void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
   if (touch_has_signal()) {
@@ -155,7 +148,7 @@ void setup() {
   ledcAttachPin(TFT_BL, pwmChannel);
   ledcWrite(pwmChannel, 255); 
 
-  #ifdef ESP32S3
+  #ifdef TARGET_ESP32_S3
     pinMode(38, OUTPUT);
     digitalWrite(38, LOW);
     pinMode(0, OUTPUT);
@@ -165,7 +158,6 @@ void setup() {
   lcd->begin();
   lcd->fillScreen(BLACK);
 
-  // 🛑 COMMENTED OUT TO PREVENT CRASH
   touch_init();
 
   screenWidth = lcd->width();

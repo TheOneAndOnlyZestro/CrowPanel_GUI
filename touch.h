@@ -3,11 +3,10 @@
 // ==========================================
 int touch_last_x = 0, touch_last_y = 0;
 
-#define ESP32
 // ==========================================
 // FOR ESP32-S3 (480x272 Capacitive Touch)
 // ==========================================
-#ifdef ESP32S3
+#ifdef TARGET_ESP32_S3
 
   // Uncomment the driver your S3 board originally used
   //#define TOUCH_FT6X36
@@ -92,13 +91,13 @@ int touch_last_x = 0, touch_last_y = 0;
     #endif
   }
 
-#endif // ESP32S3
+#endif // TARGET_ESP32_S3
 
 
 // ==========================================
 // FOR ESP32-WROOM (ELECROW 2.8" Resistive)
 // ==========================================
-#ifdef ESP32
+#ifdef TARGET_ESP32_WROOM
 
   #define TOUCH_XPT2046
 
@@ -150,4 +149,4 @@ int touch_last_x = 0, touch_last_y = 0;
     return true;
   }
 
-#endif // ESP32
+#endif // TARGET_ESP32_WROOM

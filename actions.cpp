@@ -1,20 +1,9 @@
+#include "config.h"
+
 #include "actions.h"
-#include "screens.h" // Ensures we can access objects.bg_circle
+#include "screens.h" 
 #include <Arduino.h>
 #include <lvgl.h>
-
-#define ESP32
-//#define ESP32S3
-
-#ifdef ESP32S3
-const int CHARGE_CONTROL_PIN = 38;  
-const int DISCHARGE_CONTROL_PIN = 37;  
-#endif
-
-#ifdef ESP32
-const int CHARGE_CONTROL_PIN = 25;  
-const int DISCHARGE_CONTROL_PIN = 32;  
-#endif
 
 #define COLOR_ON  lv_color_hex(0x00E676) // Bright Green
 #define COLOR_OFF lv_color_hex(0xF44336) // Red

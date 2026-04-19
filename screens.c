@@ -1,54 +1,9 @@
+#include "config.h"
+
 #include "screens.h"
 #include "images.h"
 #include "actions.h"
 #include "ui.h"
-
-// ==========================================
-// HARDWARE SCALING GUARDS
-// ==========================================
-#ifdef ESP32S3
-    // Dimensions for 480x272 (Includes 4mm left bezel fix)
-    #define UI_TAB_WIDTH         252
-    #define UI_TAB_ALIGN_X       0
-    #define UI_LOGO_OFFSET_X     -25
-    #define UI_ARC_MAIN_SIZE     180
-    #define UI_BG_MAIN_SIZE      140
-    #define UI_ARC_ADV_SIZE      160
-    #define UI_BG_ADV_SIZE       120
-    #define UI_BAR_WIDTH         200
-    #define UI_ADV_PANEL_W       240
-    #define UI_ROW_HEIGHT        45
-    #define UI_SLIDER_WIDTH      220
-    
-    #define FONT_SOC_MAIN        &lv_font_montserrat_34
-    #define FONT_SOC_ADV         &lv_font_montserrat_24
-    #define FONT_DATA_L          &lv_font_montserrat_24
-    #define FONT_DATA_M          &lv_font_montserrat_20
-    #define FONT_DATA_S          &lv_font_montserrat_16
-    #define FONT_DATA_XS         &lv_font_montserrat_14
-#endif
-
-#ifdef ESP32
-    // Dimensions scaled down for 320x240 (Standard full-width)
-    #define UI_TAB_WIDTH         LV_PCT(100) 
-    #define UI_TAB_ALIGN_X       0
-    #define UI_LOGO_OFFSET_X     -5
-    #define UI_ARC_MAIN_SIZE     140
-    #define UI_BG_MAIN_SIZE      100
-    #define UI_ARC_ADV_SIZE      120
-    #define UI_BG_ADV_SIZE       80
-    #define UI_BAR_WIDTH         160
-    #define UI_ADV_PANEL_W       200
-    #define UI_ROW_HEIGHT        35
-    #define UI_SLIDER_WIDTH      180
-    
-    #define FONT_SOC_MAIN        &lv_font_montserrat_24
-    #define FONT_SOC_ADV         &lv_font_montserrat_20
-    #define FONT_DATA_L          &lv_font_montserrat_20
-    #define FONT_DATA_M          &lv_font_montserrat_16
-    #define FONT_DATA_S          &lv_font_montserrat_14
-    #define FONT_DATA_XS         &lv_font_montserrat_12
-#endif
 
 objects_t objects;
 
